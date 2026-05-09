@@ -1,15 +1,14 @@
-import sys
 
+import sys
+print("MAIN RUNNING")
 from PyQt5.QtWidgets import QApplication
 
-from canvas import Canvas
+from main_window import MainWindow
 
 
 app = QApplication(sys.argv)
 
-window = Canvas()
-
-window.setWindowTitle("2D Geometry Editor")
+window = MainWindow()
 
 window.show()
 
