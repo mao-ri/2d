@@ -1,10 +1,14 @@
-from PyQt5.QtWidgets import QApplication, QWidget
 import sys
+
+from PyQt5.QtWidgets import QApplication
+
+from canvas import Canvas
+
 
 app = QApplication(sys.argv)
 
-window = QWidget()
-window.resize(800, 600)
+window = Canvas()
+
 window.setWindowTitle("2D Geometry Editor")
 
 window.show()
