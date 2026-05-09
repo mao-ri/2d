@@ -7,6 +7,7 @@ import json
 from point import Point
 from line import Line
 from PyQt5.QtGui import QPainter, QPainterPath
+from curve import Curve
 
 
 
@@ -29,47 +30,60 @@ class Canvas(QWidget):
 
         x = event.x()
         y = event.y()
-        self.temp_points = []
 
+        # =========================
         # 右键删除线
+        # =========================
         if event.button() == Qt.RightButton:
 
             for line in self.lines:
 
                 distance = self.point_to_line_distance(
-                    x,
-                    y,
-                    line.start.x,
-                    line.start.y,
-                    line.end.x,
-                    line.end.y
+                    x, y,
+                    line.start.x, line.start.y,
+                    line.end.x, line.end.y
                 )
 
                 if distance < 8:
 
                     self.lines.remove(line)
-
                     self.update()
-
                     return
 
-        # 左键
+        # =========================
+        # 左键逻辑
+        # =========================
         if event.button() == Qt.LeftButton:
 
             clicked_point = self.find_point(x, y)
-            
 
-            # 点击已有点
+            # =====================
+            # ⭐ 1. 点在已有点上
+            # =====================
             if clicked_point:
 
+                # ---------- 曲线逻辑 ----------
+                self.temp_points.append(clicked_point)
+
+                if len(self.temp_points) == 3:
+
+                    curve = Curve(
+                        self.temp_points[0],
+                        self.temp_points[1],
+                        self.temp_points[2]
+                    )
+
+                    self.curves.append(curve)
+                    self.temp_points = []
+
+                # ---------- 拖拽 ----------
                 self.dragging_point = clicked_point
 
-                # 第一次选择
+                # ---------- 连线 ----------
                 if self.selected_point is None:
 
                     self.selected_point = clicked_point
 
-                # 第二次选择
                 else:
 
                     if clicked_point != self.selected_point:
@@ -83,15 +97,15 @@ class Canvas(QWidget):
 
                     self.selected_point = None
 
-            # 点击空白区域
+            # =====================
+            # ⭐ 2. 空白区域：创建点
+            # =====================
             else:
 
                 point = Point(x, y)
-
                 self.points.append(point)
 
             self.update()
-        
     def point_to_line_distance(self, px, py, x1, y1, x2, y2):
 
         dx = x2 - x1

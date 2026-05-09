@@ -1,6 +1,6 @@
 
 import sys
-print("MAIN RUNNING")
+
 from PyQt5.QtWidgets import QApplication
 
 from main_window import MainWindow

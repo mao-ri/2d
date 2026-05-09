@@ -47,6 +47,10 @@ class MainWindow(QMainWindow):
         main_layout.addWidget(self.canvas)
 
     def clear_canvas(self):
-        self.canvas.points.clear()
-        self.canvas.lines.clear()
-        self.canvas.update()
+
+        self.points.clear()
+        self.lines.clear()
+        self.curves.clear()        # ⭐ 新增
+        self.temp_points = []      # ⭐ 新增
+
+        self.update()
