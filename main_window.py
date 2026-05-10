@@ -48,9 +48,9 @@ class MainWindow(QMainWindow):
 
     def clear_canvas(self):
 
-        self.points.clear()
-        self.lines.clear()
-        self.curves.clear()        # ⭐ 新增
-        self.temp_points = []      # ⭐ 新增
+        self.canvas.points.clear()
+        self.canvas.lines.clear()
+        self.canvas.curves.clear()
+        self.canvas.temp_points.clear()
 
-        self.update()
+        self.canvas.update()
