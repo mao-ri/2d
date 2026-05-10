@@ -125,18 +125,17 @@ class Canvas(QWidget):
     
     def find_point(self, x, y):
 
+            # 普通点
         for point in self.points:
-
-            distance = math.hypot(
-                point.x - x,
-                point.y - y
-            )
-
-            if distance < 8:
+            if math.hypot(point.x - x, point.y - y) < 8:
                 return point
 
-        return None
+        # ⭐ 曲线控制点（新增）
+        for curve in self.curves:
+            if math.hypot(curve.control.x - x, curve.control.y - y) < 8:
+                return curve.control
 
+        return None
     def paintEvent(self, event):
 
         painter = QPainter(self)
