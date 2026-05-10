@@ -56,3 +56,6 @@ python main.py
 │── curve.py
 │── scene.json
 ```
+## GitHub 仓库
+
+https://github.com/mao-ri/2d
